@@ -65,7 +65,12 @@ class Domain {
         return preg_match( '/\w+\:\/\//', $url );
     }
 
-    public function GetDomainOnly( $url = null ) {
+    public function GetDomainOnly($url = null) {
+        $domain_pieces = explode('.', $this->GetWithSubDomain($url));
+        return $domain_pieces[count($domain_pieces) - 2] . '.' . $domain_pieces[count($domain_pieces) - 1];
+    }
+
+    public function GetWithSubDomain($url = null) {
         $pieces = explode( '/', $this->Get( true, $url ) );
         return $pieces[0];
     }
@@ -89,7 +94,8 @@ class Domain {
 
                     if (isset( $img->src )) {
                         if (!$this->IsLinkExternal( $img->src ))
-                            $img->src = $this->Get( false ) . $img->src;
+                            if (!$this->IncludesProtocol($img->src))
+                                $img->src = $this->Get( false ) . $img->src;
 
                         $a_innertext = $img;
                     }
@@ -102,7 +108,7 @@ class Domain {
     }
 
     private function IsLinkExternal( $link ) {
-        $includes_domain = preg_match( '/' . $this->GetDomainOnly() . '/', $link );
+        $includes_domain = preg_match( '/' . $this->GetWithSubDomain() . '/', $link );
         $includes_protocol = $this->IncludesProtocol( $link );
 
         if ($includes_domain)

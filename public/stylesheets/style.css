@@ -637,20 +637,28 @@ hr {
     min-height: 700px;
 }
 
-details {
-    margin-bottom: 10px;
-}
-
-summary span {
-    margin-left: 10px;
-}
-
-.summary-content {
-    padding: 5px;
-    margin-left: 20px;
-}
-
 .content-navigation {
     margin: 5px 0 10px 5px;
 }
+
+.results-table {
+    width: 100%;
+}
+
+.results-table th {
+    font-weight: bold;
+    text-align: left;
+}
+
+.results-table td {
+    text-align: left;
+}
+
+.results-table tr.head {
+    border-top: 1px solid #E5E5E5;
+}
+
+
+
+
 

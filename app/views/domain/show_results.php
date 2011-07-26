@@ -5,30 +5,43 @@
 <div id=domains_info>
     <h2>Information about requested domains</h2>
 
-    <?php foreach ($this->info as $info) { ?>
     <div class="clear"></div>
-    <details open=open>
-        <summary>
-            <span>
-                <?=htmlspecialchars($info->url, ENT_QUOTES)?>
-                [<?=$info->ip_address?>]
-                <?=$info->google_results?>
-                (<?="{$info->country_name} [{$info->country_code}]"?>)
-            </span>
-        </summary>
-        <div class="summary-content">
-
-            <?php if (!empty($info->external_links)) { ?>
-                <ul class=external-links>
-                <?php foreach($info->external_links as $link) { ?>
-                    <li><a href="<?=$link['url']?>"><?=$link['text']?></a></li>
+    <table class=results-table>
+    <?php foreach ($this->info as $info) { ?>
+        <tr class=head>
+            <th>Url</th>
+            <th>IP Address</th>
+            <th>Google Results</th>
+            <th>Country</th>
+        </tr>
+        <tr class=body>
+            <td><?=htmlspecialchars($info->url, ENT_QUOTES)?></td>
+            <td><?=$info->ip_address?></td>
+            <td><?=$info->google_results?></td>
+            <td><?=$info->country_code?></td>
+        </tr>
+        <tr class=links>
+            <td colspan=4>
+                <br />
+                <strong>External Links:</strong>
+                <br />
+                <?php if (!empty($info->external_links)) { ?>
+                    <ul class=external-links>
+                    <?php foreach($info->external_links as $link) { ?>
+                        <li><a href="<?=$link['url']?>"><?=$link['text']?></a></li>
+                    <?php } ?>
+                    </ul>
+                <?php } else { ?>
+                    <h2>Haven't external links</h2>
                 <?php } ?>
-                </ul>
-            <?php } else { ?>
-                <h2>Haven't external links</h2>
-            <?php } ?>
-        </div>
-    </details>
-
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <br />
+            </td>
+        </tr>
     <?php } ?>
+    </table>
 </div>
