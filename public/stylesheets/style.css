@@ -70,7 +70,7 @@ legend {
 }
 
 .centered, #header #header_content, #main, #footer div#footer_content {
-    width: 960px;
+    width: 1200px;
     margin: 0 auto;
 }
 
@@ -322,7 +322,7 @@ button:focus {
 }
 
 input[type="submit"]::-moz-focus-inner, input[type="button"]::-moz-focus-inner {
-    border: 0px;
+    border: 0;
 }
 
 form .editable:hover {
@@ -380,6 +380,10 @@ input.wide {
 }
 
 input.url-wide {
+    width: 90%;
+}
+
+.url-wide {
     width: 90%;
 }
 
@@ -461,7 +465,7 @@ hr {
 #header #header_content ul#account_box {
     padding-top: 0.8em;
     float: right;
-    margin-right: 0em;
+    margin-right: 0;
 }
 
 #header #header_content ul#account_box li a.selected {
@@ -656,6 +660,19 @@ hr {
 
 .results-table tr.head {
     border-top: 1px solid #E5E5E5;
+}
+
+.external-links {
+    margin-left: 40px;
+}
+
+.external-links th {
+    font-weight: bold;
+    text-align: left;
+}
+
+.external-links td {
+    text-align: left;
 }
 
 

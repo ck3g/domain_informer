@@ -6,10 +6,14 @@ class Domain {
     private $url;
     private $external_links = array();
 
-    private $errors = array();
+    private $exceptions = array();
 
     public function __construct($url = '') {
-        $this->url = $url;
+        $this->url = str_replace(' ', '', $url);
+
+        $this->exceptions = array(
+            'javascript://'
+        );
     }
 
     public function SetUrl($url) {
@@ -18,7 +22,7 @@ class Domain {
 
     public function GetInfo() {
         $this->info->url = $this->url;
-        $this->info->ip_address = gethostbyname($this->GetDomainOnly($this->url));
+        $this->info->ip_address = gethostbyname($this->GetWithSubDomain());
         $this->info->google_results = $this->GetGoogleResults();
         $this->info->external_links = $this->GetListOfExternalLinks();
 
@@ -47,15 +51,17 @@ class Domain {
         if ($url === null)
             $url = $this->url;
 
+        $url = str_replace(' ', '', $url);
+
         if (!$without_protocol) {
-            if ($this->IncludesProtocol( $url ))
+            if ($this->IncludesProtocol($url))
                 return $url;
             else
                 return 'http://' . $url;
 
         }
 
-        return preg_replace( '/\w+\:\/\//', '', $url );
+        return preg_replace('/\w+\:\/\//', '', $url);
     }
 
     private function IncludesProtocol( $url = null ) {
@@ -66,12 +72,18 @@ class Domain {
     }
 
     public function GetDomainOnly($url = null) {
+        if ($url === null)
+            $url = $this->url;
+
         $domain_pieces = explode('.', $this->GetWithSubDomain($url));
         return $domain_pieces[count($domain_pieces) - 2] . '.' . $domain_pieces[count($domain_pieces) - 1];
     }
 
     public function GetWithSubDomain($url = null) {
-        $pieces = explode( '/', $this->Get( true, $url ) );
+        if ($url === null)
+            $url = $this->url;
+
+        $pieces = explode( '/', $this->Get(true, $url));
         return $pieces[0];
     }
 
@@ -86,7 +98,7 @@ class Domain {
         foreach ($html->find( 'a' ) as $a) {
             if ($this->IsLinkExternal( $a->href )) {
 
-                $a_innertext = $a->outertext;
+                $a_innertext = $a->innertext;
 
                 $img_html = str_get_html( $a_innertext );
                 if ($img_html !== false) {
@@ -108,6 +120,9 @@ class Domain {
     }
 
     private function IsLinkExternal( $link ) {
+        if (in_array($link, $this->exceptions))
+            return false;
+
         $includes_domain = preg_match( '/' . $this->GetWithSubDomain() . '/', $link );
         $includes_protocol = $this->IncludesProtocol( $link );
 

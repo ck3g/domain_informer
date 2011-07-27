@@ -18,25 +18,32 @@
             <td><?=htmlspecialchars($info->url, ENT_QUOTES)?></td>
             <td><?=$info->country_code?></td>
             <td><?=$info->ip_address?></td>
-            <td><?=$info->google_results?></td>
+            <td><?=empty($info->google_results) ? '-' : $info->google_results?></td>
         </tr>
         <tr class=links>
             <td colspan=4>
                 <br />
-                <details>
-                    <summary close=close><strong>External Links</strong></summary>
+                <a href="javascript://" class="show-links">External links...</a>
+                <div class="links-list" style="display: none;">
                     <br />
                     <?php if (!empty($info->external_links)) { ?>
-                        <ul class=external-links>
+                        <table class="external-links">
+                            <tr>
+                                <th>Keyword</th>
+                                <th style="margin-left: 20px;">Url</th>
+                            </tr>
                         <?php foreach($info->external_links as $link) { ?>
-                            <li><a href="<?=$link['url']?>"><?=$link['text']?></a></li>
+                            <tr>
+                                <td><?=$link['text']?>&nbsp;&nbsp;&nbsp;</td>
+                                <td><?=$link['url']?></td>
+                            </tr>
                         <?php } ?>
-                        </ul>
+                        </table>
                     <?php } else { ?>
                         <h2>Haven't external links</h2>
                     <?php } ?>
                     <br />
-                </details>
+                </div>
             </td>
         </tr>
         <tr>
@@ -47,3 +54,10 @@
     <?php } ?>
     </table>
 </div>
+<script type="text/javascript">
+    $(function() {
+        $("a.show-links").click(function() {
+            $(this).next("div.links-list").toggle();
+        });
+    });
+</script>
