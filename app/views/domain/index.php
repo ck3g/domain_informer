@@ -2,7 +2,9 @@
     <form id=domain_form action="?controller=domain&action=show_results" method="post">
         <div id=domains_content>
             <div>
-                <textarea name="domains" class="url-wide" placeholder="Enter list of urls here" rows="15"></textarea>
+                <?php
+                ?>
+                <textarea name="domains" class="url-wide" placeholder="Enter list of urls here" rows="15"><?=$this->domains_list?></textarea>
             </div>
         </div>
             <div id=buttons>

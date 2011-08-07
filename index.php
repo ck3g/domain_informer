@@ -6,11 +6,11 @@ require 'app/controllers/application_controller.php';
 require 'app/controllers/home_controller.php';
 require 'lib/exceptions.php';
 require 'lib/geoip/geoip.inc';
+require 'lib/environment.php';
+require 'config.php';
+require 'lib/PHPExcel.php';
 
-
-set_time_limit(0);
-
-ini_set('user_agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13');
+Environment::init();
 
 define('PHP_ROOT', dirname(__FILE__));
 
@@ -24,7 +24,6 @@ $site_path = 'http' . (isset( $_SERVER['HTTPS'] ) ? 's' : '') . '://' . $_SERVER
 
 define( 'SITE_PATH', $site_path );
 
-header('Content-type: text/html; charset=windows-1251');
 $controller_name = strtolower($_REQUEST['controller']);
 
 if (!isset($_REQUEST['action']) || empty($_REQUEST['action']))
@@ -61,7 +60,7 @@ $ob = ob_get_clean();
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link href="public/stylesheets/style.css" type="text/css" rel="stylesheet" />
         <script type="text/javascript" src="public/javascripts/jquery-1.6.2.min.js"></script>
     </head>
@@ -103,4 +102,3 @@ $ob = ob_get_clean();
         </div>
     </body>
 </html>
- 

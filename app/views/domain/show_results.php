@@ -1,5 +1,6 @@
 <div class="content-navigation">
     <a href="?controller=domain" class="button green tall">&lt; Get another domain(s) info</a>
+    <a href="<?=SITE_PATH?>/tmp/results.xls" class="button green tall">Export to Excel</a>
 </div>
 
 <div id=domains_info>
@@ -12,13 +13,13 @@
             <th>Url</th>
             <th>Country</th>
             <th>IP Address</th>
-            <th>Google Results</th>
+            <th>G. index</th>
         </tr>
         <tr class=body>
             <td><?=htmlspecialchars($info->url, ENT_QUOTES)?></td>
             <td><?=$info->country_code?></td>
             <td><?=$info->ip_address?></td>
-            <td><?=empty($info->google_results) ? '-' : $info->google_results?></td>
+            <td><?=$info->google_results?></td>
         </tr>
         <tr class=links>
             <td colspan=4>
@@ -58,6 +59,10 @@
     $(function() {
         $("a.show-links").click(function() {
             $(this).next("div.links-list").toggle();
+        });
+
+        $("#to_excel_button").click(function() {
+            $("#to_excel_form").submit();
         });
     });
 </script>

@@ -42,12 +42,12 @@ class Domain {
 
         preg_match( '/id=resultStats\>(?<results>[A-Za-z0-9-.,\s]*)/', $content, $matches );
         if (count( $matches ) && isset( $matches['results'] ))
-            return $matches['results'];
+            return preg_replace('/\D/', '', $matches['results']);
         
-        return '';
+        return '-';
     }
 
-    private function Get( $without_protocol = true, $url = null ) {
+    public function Get($without_protocol = true, $url = null) {
         if ($url === null)
             $url = $this->url;
 
@@ -87,10 +87,21 @@ class Domain {
         return $pieces[0];
     }
 
+    private function GetCharset($url) {
+        $html = file_get_contents($url);
+        preg_match('/charset=(?<charset>[\w\d\-]*)/', $html, $matches);
+        if (count($matches) && isset($matches['charset']))
+            return $matches['charset'];
+
+        return 'unknown';
+    }
+
     private function GetListOfExternalLinks() {
         $html = file_get_html( $this->Get( false ) );
         if (!$html)
             return array();
+
+        $charset = $this->GetCharset($this->Get(false));
 
         $html->find( 'a' );
 
@@ -112,7 +123,14 @@ class Domain {
                         $a_innertext = $img;
                     }
                 }
-                $links[] = array( 'url' => $a->href, 'text' => $a_innertext );
+
+                $url = (string)$a->href;
+                $text = (string)$a_innertext;
+                if (strtolower($charset) != 'utf-8') {
+                    $url = iconv($charset, 'utf-8', $url);
+                    $text = iconv($charset, 'utf-8', $text);
+                }
+                $links[] = array('url' => $url, 'text' => $text);
             }
         }
 
