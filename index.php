@@ -7,6 +7,7 @@ require 'app/controllers/home_controller.php';
 require 'lib/exceptions.php';
 require 'lib/geoip/geoip.inc';
 require 'lib/environment.php';
+require 'lib/GooglePageRankChecker.php';
 require 'config.php';
 require 'lib/PHPExcel.php';
 

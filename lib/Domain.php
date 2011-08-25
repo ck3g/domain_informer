@@ -31,6 +31,8 @@ class Domain {
         $this->info->country_code = geoip_country_code_by_addr($geoip, $this->info->ip_address);
         geoip_close($geoip);
 
+        $this->info->google_pr = GooglePageRankChecker::getRank($this->GetWithSubDomain());
+
         return $this->info;
     }
 

@@ -37,19 +37,23 @@ class DomainModel {
         $a_sheet->getColumnDimension('A')->setWidth(35);
         $a_sheet->getStyle('A1')->applyFromArray($bold_font)->applyFromArray($center);
 
-        $a_sheet->setCellValue('B1', 'Country');
-        $a_sheet->setCellValue('B2', $domain_info->country_code);
-        $a_sheet->getColumnDimension('B')->setWidth(35);
+        $a_sheet->setCellValue('B1', 'PR');
+        $a_sheet->setCellValue('B2', $domain_info->google_pr);
         $a_sheet->getStyle('B1')->applyFromArray($bold_font)->applyFromArray($center);
 
-        $a_sheet->setCellValue('C1', 'IP Address');
-        $a_sheet->setCellValue('C2', $domain_info->ip_address);
-        $a_sheet->getColumnDimension('C')->setWidth(15);
+        $a_sheet->setCellValue('C1', 'Country');
+        $a_sheet->setCellValue('C2', $domain_info->country_code);
+        $a_sheet->getColumnDimension('C')->setWidth(35);
         $a_sheet->getStyle('C1')->applyFromArray($bold_font)->applyFromArray($center);
 
-        $a_sheet->setCellValue('D1', 'G. index');
-        $a_sheet->setCellValue('D2', $domain_info->google_results);
+        $a_sheet->setCellValue('D1', 'IP Address');
+        $a_sheet->setCellValue('D2', $domain_info->ip_address);
+        $a_sheet->getColumnDimension('D')->setWidth(15);
         $a_sheet->getStyle('D1')->applyFromArray($bold_font)->applyFromArray($center);
+
+        $a_sheet->setCellValue('E1', 'G. index');
+        $a_sheet->setCellValue('E2', $domain_info->google_results);
+        $a_sheet->getStyle('E1')->applyFromArray($bold_font)->applyFromArray($center);
 
         if (!empty($domain_info->external_links)) {
             $a_sheet->setCellValue('A4', 'Keyword');

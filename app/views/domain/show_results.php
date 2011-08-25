@@ -11,12 +11,14 @@
     <?php foreach ($this->info as $info) { ?>
         <tr class=head>
             <th>Url</th>
+            <th>PR</th>
             <th>Country</th>
             <th>IP Address</th>
             <th>G. index</th>
         </tr>
         <tr class=body>
             <td><?=htmlspecialchars($info->url, ENT_QUOTES)?></td>
+            <td><?=$info->google_pr?>/10</td>
             <td><?=$info->country_code?></td>
             <td><?=$info->ip_address?></td>
             <td><?=$info->google_results?></td>
